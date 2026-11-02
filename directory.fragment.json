@@ -1,0 +1,80 @@
+{
+  "contract": "directory/1",
+  "generated": "2026-11-02",
+  "org": "org/agent-starter",
+  "nodes": [
+    {
+      "id": "org/agent-starter",
+      "kind": "org",
+      "name": "Create Mesh Agent"
+    },
+    {
+      "id": "person/michael",
+      "kind": "person",
+      "name": "Michael Gord"
+    },
+    {
+      "id": "agent/agent-starter-template",
+      "kind": "agent",
+      "name": "template",
+      "for": "org/agent-starter"
+    },
+    {
+      "id": "agent/agent-starter-conformance",
+      "kind": "agent",
+      "name": "conformance",
+      "for": "org/agent-starter"
+    },
+    {
+      "id": "agent/agent-starter-release",
+      "kind": "agent",
+      "name": "release",
+      "for": "org/agent-starter"
+    },
+    {
+      "id": "agent/agent-starter-adoption",
+      "kind": "agent",
+      "name": "adoption",
+      "for": "org/agent-starter"
+    },
+    {
+      "id": "agent/agent-starter-review",
+      "kind": "agent",
+      "name": "review",
+      "for": "org/agent-starter"
+    }
+  ],
+  "edges": [
+    {
+      "from": "org/agent-starter",
+      "rel": "staffs",
+      "to": "agent/agent-starter-template",
+      "by": "person/michael"
+    },
+    {
+      "from": "org/agent-starter",
+      "rel": "staffs",
+      "to": "agent/agent-starter-conformance",
+      "by": "person/michael"
+    },
+    {
+      "from": "org/agent-starter",
+      "rel": "staffs",
+      "to": "agent/agent-starter-release",
+      "by": "person/michael"
+    },
+    {
+      "from": "org/agent-starter",
+      "rel": "staffs",
+      "to": "agent/agent-starter-adoption",
+      "by": "person/michael"
+    },
+    {
+      "from": "org/agent-starter",
+      "rel": "staffs",
+      "to": "agent/agent-starter-review",
+      "by": "person/michael"
+    }
+  ],
+  "x-note": "Five agents, one per charter role. Generated from flashyos.roles.json; a live org is provisioned from the charter with provision-org-from-charter."
+}

@@ -1,0 +1,95 @@
+{
+  "x-generated": "estate-charter/1; 2026-11-02; every role is one standing job, and five roles are five agents",
+  "aao": "0.1",
+  "name": "Create Mesh Agent",
+  "slug": "agent-starter",
+  "description": "Create Mesh Agent — the scaffolder that writes a starter agent on the FlashyOS mesh, published as npx @flashyos/create-mesh-agent once carried out of the monorepo. AAO expands to Agentic Autonomous Organization.",
+  "accountableTo": "michael@gda.capital",
+  "escalation": "template",
+  "repositories": [
+    {
+      "name": "agent-starter",
+      "url": "github.com/AgenteLabs/agent-starter",
+      "default": true,
+      "holds": [
+        "generator",
+        "fixtures"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "name": "template",
+      "family": "engineering",
+      "purpose": "Owns the scaffold itself — what gets written into a new agent's directory — and keeps it in sync with @flashyos/agent's current surface, so a generated starter never imports an SDK shape that no longer exists.",
+      "measure": "Fixture scaffolds that typecheck against the current @flashyos/agent surface, as a share of fixtures",
+      "capabilities": [
+        "maintain-scaffold",
+        "sync-template"
+      ],
+      "humanApprovalAtOrAbove": "HIGH",
+      "x-capability": [
+        "content-exchange"
+      ],
+      "worksIn": [
+        "agent-starter"
+      ]
+    },
+    {
+      "name": "conformance",
+      "family": "engineering",
+      "purpose": "Runs the generator against its fixtures and asserts every scaffold it writes actually installs, typechecks and passes its own starter test — a scaffold that only looks right is worse than one that visibly fails.",
+      "measure": "Fixture runs producing a passing starter, as a share of runs",
+      "capabilities": [
+        "run-fixtures",
+        "check-output"
+      ],
+      "humanApprovalAtOrAbove": "LOW",
+      "worksIn": [
+        "agent-starter"
+      ]
+    },
+    {
+      "name": "release",
+      "family": "operations",
+      "purpose": "Cuts versioned releases with a changelog entry, so a version says what the generator will refuse to write and never moves once it ships.",
+      "measure": "Releases with a changelog entry, as a share of tags",
+      "capabilities": [
+        "tag-version",
+        "publish-package"
+      ],
+      "humanApprovalAtOrAbove": "MEDIUM",
+      "worksIn": [
+        "agent-starter"
+      ]
+    },
+    {
+      "name": "adoption",
+      "family": "growth",
+      "purpose": "Helps a new participant get from npx to a running, mesh-registered agent, and records real scaffolds that reached a first task rather than a download count.",
+      "measure": "Scaffolds reaching a first mesh-registered task, as a share of scaffolds run",
+      "capabilities": [
+        "guide-adopter",
+        "record-scaffold"
+      ],
+      "humanApprovalAtOrAbove": "LOW",
+      "worksIn": [
+        "agent-starter"
+      ]
+    },
+    {
+      "name": "review",
+      "family": "risk",
+      "purpose": "Reviews a template change before it lands, because a bad scaffold ships into every adopter's codebase at once, not just this one.",
+      "measure": "Template changes carrying an approving review, as a share of merges",
+      "capabilities": [
+        "review-template",
+        "approve-change"
+      ],
+      "humanApprovalAtOrAbove": "HIGH",
+      "worksIn": [
+        "agent-starter"
+      ]
+    }
+  ]
+}
