@@ -1,0 +1,55 @@
+name: FlashyOS branch mesh sync
+
+# Reports this repo's branches as *assignments* grouped under the role that
+# owns each one, per flashyos.roles.json. A branch belonging to no declared
+# role reports nothing — which is the change that stopped the public directory
+# filling with build logs. Scheduled (not
+# push-triggered): a push-triggered workflow only fires for the workflow
+# file version already present on the pushed branch, so adding it there
+# would mean editing every other agent's active branch. Polling from here
+# instead needs no changes to any other branch.
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: flashyos-branch-mesh-sync
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    name: Charter conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            flashyos.roles.json
+            scripts/check-charter.mjs
+          sparse-checkout-cone-mode: false
+      - run: node scripts/check-charter.mjs flashyos.roles.json
+
+  sync:
+    needs: conformance
+    runs-on: ubuntu-latest
+    env:
+      FLASHYOS_API_URL: https://api.flashyos.com
+      FLASHYOS_ORG_ID: cmwkevc7c0001y28itqg68sav
+      FLASHYOS_AGENT_BOOTSTRAP_KEY: ${{ secrets.FLASHYOS_AGENT_BOOTSTRAP_KEY }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/flashyos-branch-mesh-sync.mjs
+            scripts/flashyos-role-mesh.cjs
+            flashyos.roles.json
+          sparse-checkout-cone-mode: false
+
+      - name: Report branches under the roles that own them
+        run: node scripts/flashyos-branch-mesh-sync.mjs
